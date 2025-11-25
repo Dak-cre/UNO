@@ -35,7 +35,7 @@ public class JugadorUNO extends Thread{
     CartaMazo aux = new CartaMazo();
     Carta uax2 = new Carta("", "", -1);
     String color;
-    Interfaz UI = new Interfaz();
+    Interfaz UI ;
     
     
     
@@ -45,8 +45,7 @@ public class JugadorUNO extends Thread{
         
         this.name = "";
         aux.CrearMazo();
-        
-        
+  
     }
     
     public  boolean Conectar(String host, int IP){
@@ -194,7 +193,7 @@ public class JugadorUNO extends Thread{
                     
                 }
                 
-                UI.ListaCartasComboBox(mano);
+                //UI.ListaCartasComboBox(mano);
                 UI.iniciarJuego();
                 
                 

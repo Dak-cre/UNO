@@ -139,7 +139,7 @@ public class Juego {
                 int idCarta = json.get("Carta").getAsInt();
                 msj.addProperty("Carta", idCarta);
 
-                if (idCarta >= 104) {
+                if ( idCarta >= 104 ) {
 
                     JsonObject cambioColor = new JsonObject();
                     cambioColor.addProperty("Tipo", "CambioColor");
@@ -148,7 +148,11 @@ public class Juego {
                     String cambioCOlormsg = cambioColor.toString();
                     enviarMensajeTodos(cambioCOlormsg);
 
-                } else if (auxiliar.getCartas().get(idCarta).getAccion().equals("reversa")) {
+                } else if (
+                        auxiliar.getCartas().get(idCarta).getAccion() != null && 
+                        auxiliar.getCartas().get(idCarta).getAccion().equals("reversa")
+                        
+                        ) {
 
                     JsonObject cambioDireccion = new JsonObject();
                     cambioDireccion.addProperty("Tipo", "CambioDireccion");
@@ -157,7 +161,9 @@ public class Juego {
 
                     this.direccion *= -1;
 
-                } else if (auxiliar.getCartas().get(idCarta).getAccion().equals("+4")) {
+                } else if (
+                        auxiliar.getCartas().get(idCarta).getAccion() != null &&                        
+                        auxiliar.getCartas().get(idCarta).getAccion().equals("+4")) {
 
                     JsonObject sumar4 = new JsonObject();
                     sumar4.addProperty("Tipo", "Sumar4");
@@ -175,7 +181,9 @@ public class Juego {
 
                     this.pocicionActual = (this.pocicionActual + this.direccion) % jugadores.size();
 
-                } else if (auxiliar.getCartas().get(idCarta).getAccion().equals("+2")) {
+                } else if (
+                        auxiliar.getCartas().get(idCarta).getAccion() != null &&
+                        auxiliar.getCartas().get(idCarta).getAccion().equals("+2")) {
                     JsonObject sumar2 = new JsonObject();
                     sumar2.addProperty("Tipo", "Sumar2");
 
@@ -192,7 +200,9 @@ public class Juego {
 
                     this.pocicionActual = (this.pocicionActual + this.direccion) % jugadores.size();
 
-                } else if (auxiliar.getCartas().get(idCarta).getAccion().equals("bloqueo")) {
+                } else if (
+                        auxiliar.getCartas().get(idCarta).getAccion() != null &&
+                        auxiliar.getCartas().get(idCarta).getAccion().equals("bloqueo")) {
                     JsonObject bloqueo = new JsonObject();
                     bloqueo.addProperty("Tipo", "Bloqueo");
 

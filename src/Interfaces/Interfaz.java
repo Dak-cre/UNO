@@ -55,11 +55,15 @@ public class Interfaz extends javax.swing.JFrame {
     public void ListaCartasComboBox(List<cartas.Carta> mano) {
         //agrega cartas a la mano del jugador
         listCartas.removeAllItems();
+        
+        System.out.println("Sin cartas");
 
-        for (cartas.Carta c : mano) {
+        for (cartas.Carta c : this.Jugador.getMano()) {
             listCartas.addItem(c);
 
         }
+        
+        System.out.println("Con cartas");
 
     }
 
@@ -393,7 +397,10 @@ public class Interfaz extends javax.swing.JFrame {
 
         //JOptionPane.showMessageDialog(null, "" + Jugador.getCartaActual());
         
-        //ListaCartasComboBox( Jugador.getMano()  );
+        
+        System.out.println("Dentro de iniciarJuego");
+        
+        ListaCartasComboBox( Jugador.getMano()  );
         
     }
 

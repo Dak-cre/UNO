@@ -18,7 +18,7 @@ public class CartaAccion extends Carta {
     
     @Override
     public String toString() {
-        return "Carta" + "color=" + color  + ", accion=" + accion + '}';
+        return color +" "+ accion ;
     }
     
     @Override

@@ -18,7 +18,7 @@ public class CartaNumero extends Carta {
     
     @Override
     public String toString() {
-        return "Carta" + "color=" + color + ", valor=" + valor ;
+        return  color + " " + valor ;
     }
     
     @Override
