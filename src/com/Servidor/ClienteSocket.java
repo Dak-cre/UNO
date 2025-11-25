@@ -88,5 +88,12 @@ public class ClienteSocket extends Thread {
         mensajesServidor.println(msg);
     
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+    
+    
+    
     
 }

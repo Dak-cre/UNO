@@ -30,6 +30,8 @@ public class Juego {
     int direccion;
     int pocicionActual;
 
+    boolean hayganador = false;
+    
     public Juego() {
         this.direccion = 1;
         this.pocicionActual = -1;
@@ -93,7 +95,11 @@ public class Juego {
     }
 
     public void cambioTurno() {
-
+        
+        if(hayganador){
+            return;
+        }
+        
         this.pocicionActual = (this.pocicionActual + this.direccion) % (this.jugadores.size());
 
         JsonObject tuTurno = new JsonObject();
@@ -103,7 +109,7 @@ public class Juego {
 
         JsonObject cambioTurno = new JsonObject();
         cambioTurno.addProperty("Tipo", "CambioTurno");
-        cambioTurno.addProperty("Turno", jugadores.get(pocicionActual).getName());
+        cambioTurno.addProperty("Turno", jugadores.get(pocicionActual).getNombre());
         enviarMensajeMenos(cambioTurno.toString(), jugadores.get(pocicionActual));
 
     }
@@ -220,7 +226,7 @@ public class Juego {
                 
                 JsonObject ganador = new JsonObject();
                 ganador.addProperty("Tipo","Ganador");
-                ganador.addProperty("Ganador", c.getName());
+                ganador.addProperty("Ganador", c.getNombre());
                 
                 System.out.println("Hay ganador "+c.getName());
                 
