@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -54,17 +55,25 @@ public class Interfaz extends javax.swing.JFrame {
 
     public void ListaCartasComboBox(List<cartas.Carta> mano) {
         //agrega cartas a la mano del jugador
-        listCartas.removeAllItems();
+        //listCartas.removeAllItems();
+        
+        // linea 1
+        DefaultComboBoxModel<cartas.Carta> modelo = new DefaultComboBoxModel<>();
+        // linea 2
+        //listCartas.setModel(modelo);
         
         System.out.println("Sin cartas");
 
         for (cartas.Carta c : this.Jugador.getMano()) {
-            listCartas.addItem(c);
+            modelo.addElement(c);
 
         }
         
         System.out.println("Con cartas");
-
+        
+        listCartas.setModel(modelo);
+        
+        
     }
 
     /**
@@ -272,7 +281,6 @@ public class Interfaz extends javax.swing.JFrame {
         mensaje.addProperty("Tipo", "Robar");
 
         String mesj = mensaje.toString();
-
         Jugador.enviarMensaje(mesj);
 
 
@@ -280,12 +288,11 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void listCartasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listCartasActionPerformed
         // seleccion de carta, de jugador
-        ListaCartasComboBox(manoJugador);
-        cartas.Carta seleccionada = (cartas.Carta) listCartas.getSelectedItem();
+       cartas.Carta seleccionada = (cartas.Carta) listCartas.getSelectedItem();
 
-        if (seleccionada != null) {
-            System.out.println("Carta seleccionada: " + seleccionada);
-        }
+    if (seleccionada != null) {
+        System.out.println("Carta seleccionada: " + seleccionada);
+    }
 
     }//GEN-LAST:event_listCartasActionPerformed
 
@@ -296,10 +303,14 @@ public class Interfaz extends javax.swing.JFrame {
 
         cartas.Carta seleccionada = (cartas.Carta) listCartas.getSelectedItem();
 
-        if (seleccionada != null) {
-            System.out.println("Carta seleccionada: " + seleccionada);
+        if (seleccionada == null) {
+            JOptionPane.showMessageDialog(null, "Selecciona una carta, hdtpm", 
+                    "Pendejo", 
+                    JOptionPane.ERROR_MESSAGE);
         }
-
+        
+        
+        System.out.println("Carta seleccionada: " + seleccionada);
         manoJugador.remove(seleccionada);/*Elimina carta de la mano del jugador*/
         listCartas.removeItem(seleccionada);/*Elimina la carta del comboBoc*/
         msj.addProperty("Carta", seleccionada.getId_carta());
