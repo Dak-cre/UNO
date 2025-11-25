@@ -87,10 +87,13 @@ public class CartaMazo {
 
     public int robar() {
 
-        int id;
-        id = cartas.getLast().id_carta;
-
-        cartas.remove(id);
+        int id = cartas.getLast().getId_carta() ;
+        
+        System.out.println(cartas.getLast().getId_carta());
+        
+        
+        cartas.removeLast();
+        
 
         return id;
     }
@@ -160,3 +163,9 @@ public class CartaMazo {
     }
 
 }
+
+
+
+
+
+

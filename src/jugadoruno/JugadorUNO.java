@@ -44,11 +44,8 @@ public class JugadorUNO extends Thread{
     public JugadorUNO() {
         
         this.name = "";
-        
-        
-        
         aux.CrearMazo();
-        //this.mano.add(new  Carta("Rojo", 3, 0)   );
+        
         
     }
     
@@ -191,7 +188,10 @@ public class JugadorUNO extends Thread{
                 
                 for(int i = 0; i < id_cartas.size(); i++){
                     int j = id_cartas.get(i).getAsInt();
-                    this.mano.add(this.aux.getCartas().get(j));             
+                    this.mano.add(this.aux.getCartas().get(j));
+                    
+                    System.out.println("Carta " + this.mano.getLast());
+                    
                 }
                 
                 UI.ListaCartasComboBox(mano);

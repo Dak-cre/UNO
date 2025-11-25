@@ -72,7 +72,15 @@ public class Juego {
         JsonArray array = new JsonArray();
 
         for (int i = 0; i < 8; i++) {
-            array.add(mazo.robar());
+            
+            int id = mazo.robar();
+            
+            System.out.println("Carta " + auxiliar.getCartas().get(id));
+            
+            array.add(id);
+            
+            
+            
 
         }
 
@@ -194,7 +202,9 @@ public class Juego {
 
                 
                 this.mazo.agregarCarta(      this.auxiliar.getCartas().get(idCarta)      );
+                
                 cambioTurno();
+                
                 break;
 
             case "UNO":

@@ -124,57 +124,7 @@ public class Servidor extends Thread {
 
     }
 
-    public void enviarMensaje(String  msg) {
 
-        synchronized (JUGADORES) {
-
-            for (ClienteSocket c : JUGADORES) {
-
-                // c.EnviarMensaje("INICIO EL JUEGO");
-                
-                
-                
-                
-            }
-
-        }
-
-    }
-    
-    public void enviarMensajePrivado(String  msg, ClienteSocket cs) {
-
-        synchronized (JUGADORES) {
-
-            for (ClienteSocket c : JUGADORES) {
-
-                if(c == cs ){
-                    
-                    c.enviarMensajeJugador(msg);
-                    break;
-                 }
-            }
-
-        }
-
-    }
-    
-    
-        public void enviarMensajeMenos(String  msg, ClienteSocket cs) {
-
-        synchronized (JUGADORES) {
-
-            for (ClienteSocket c : JUGADORES) {
-
-                if(c != cs ){
-                    
-                    c.enviarMensajeJugador(msg);
-                    
-                }
-            }
-
-        }
-
-    }
 
     public int getPUERTO() {
         return PUERTO;
