@@ -207,6 +207,7 @@ public class JugadorUNO extends Thread{
                 
                 int idActual = json.get("Carta").getAsInt();
                 this.mano.add(this.aux.getCartas().get(idActual));
+                this.UI.ListaCartasComboBox(mano);
              
             break; 
             
@@ -269,8 +270,7 @@ public class JugadorUNO extends Thread{
             
             case "UNO":
                 
-                String name = json.get("Jugador").getAsString();
-                
+                String name = json.get("Jugador").getAsString();        
                 UI.notificacion(name + " dijo UNO");
             break;
             

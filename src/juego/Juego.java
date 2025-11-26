@@ -31,7 +31,7 @@ public class Juego {
     int pocicionActual;
 
     boolean hayganador = false;
-    
+
     public Juego() {
         this.direccion = 1;
         this.pocicionActual = -1;
@@ -74,15 +74,12 @@ public class Juego {
         JsonArray array = new JsonArray();
 
         for (int i = 0; i < 8; i++) {
-            
+
             int id = mazo.robar();
-            
+
             System.out.println("Carta " + auxiliar.getCartas().get(id));
-            
+
             array.add(id);
-            
-            
-            
 
         }
 
@@ -95,12 +92,12 @@ public class Juego {
     }
 
     public void cambioTurno() {
-        
-        if(hayganador){
+
+        if (hayganador) {
             return;
         }
-        
-        this.pocicionActual = (this.pocicionActual + this.direccion) % (this.jugadores.size());
+
+        this.pocicionActual = (this.pocicionActual + this.direccion + this.jugadores.size()) % (this.jugadores.size()) ;
 
         JsonObject tuTurno = new JsonObject();
         tuTurno.addProperty("Tipo", "TuTurno");
@@ -114,142 +111,139 @@ public class Juego {
 
     }
 
-    public void procesarmensaje(JsonObject json, ClienteSocket c) {
+    
+public void procesarmensaje(JsonObject json, ClienteSocket c) {
 
-        String tipoMensaje = "";
-        tipoMensaje = json.get("Tipo").getAsString();
+    String tipoMensaje = json.get("Tipo").getAsString();
 
-        switch (tipoMensaje) {
+    switch (tipoMensaje) {
 
-            case "Robar":
-
-                JsonObject msg = new JsonObject();
-                msg.addProperty("Tipo", "NuevaCarta");
-                msg.addProperty("Carta", mazo.robar());
-                String mensaje = msg.toString();
-                c.enviarMensajeJugador(mensaje);
-
-                break;
-
-            case "Jugada":
-
-                JsonObject msj = new JsonObject();
-
-                msj.addProperty("Tipo", "CambioCarta");
-                int idCarta = json.get("Carta").getAsInt();
-                msj.addProperty("Carta", idCarta);
-
-                if ( idCarta >= 104 ) {
-
-                    JsonObject cambioColor = new JsonObject();
-                    cambioColor.addProperty("Tipo", "CambioColor");
-                    String newCOlor = json.get("Color").getAsString();
-                    cambioColor.addProperty("NuevoCOlor", newCOlor);
-                    String cambioCOlormsg = cambioColor.toString();
-                    enviarMensajeTodos(cambioCOlormsg);
-
-                } else if (
-                        auxiliar.getCartas().get(idCarta).getAccion() != null && 
-                        auxiliar.getCartas().get(idCarta).getAccion().equals("reversa")
-                        
-                        ) {
-
-                    JsonObject cambioDireccion = new JsonObject();
-                    cambioDireccion.addProperty("Tipo", "CambioDireccion");
-                    String cambioDireccrmsg = cambioDireccion.toString();
-                    enviarMensajeTodos(cambioDireccrmsg);
-
-                    this.direccion *= -1;
-
-                } else if (
-                        auxiliar.getCartas().get(idCarta).getAccion() != null &&                        
-                        auxiliar.getCartas().get(idCarta).getAccion().equals("+4")) {
-
-                    JsonObject sumar4 = new JsonObject();
-                    sumar4.addProperty("Tipo", "Sumar4");
-
-                    JsonArray idCartas = new JsonArray();
-                    int temporal = (pocicionActual + direccion) % jugadores.size();
-
-                    for (int i = 0; i < 4; i++) {
-                        idCartas.add(mazo.robar());
-                    }
-
-                    sumar4.add("Cartas", idCartas);
-
-                    enviarMensajePrivado(sumar4.toString(), jugadores.get(temporal));
-
-                    this.pocicionActual = (this.pocicionActual + this.direccion) % jugadores.size();
-
-                } else if (
-                        auxiliar.getCartas().get(idCarta).getAccion() != null &&
-                        auxiliar.getCartas().get(idCarta).getAccion().equals("+2")) {
-                    JsonObject sumar2 = new JsonObject();
-                    sumar2.addProperty("Tipo", "Sumar2");
-
-                    JsonArray idCartas = new JsonArray();
-                    int temporal = (pocicionActual + direccion) % jugadores.size();
-
-                    for (int i = 0; i < 2; i++) {
-                        idCartas.add(mazo.robar());
-                    }
-
-                    sumar2.add("Cartas", idCartas);
-
-                    enviarMensajePrivado(sumar2.toString(), jugadores.get(temporal));
-
-                    this.pocicionActual = (this.pocicionActual + this.direccion) % jugadores.size();
-
-                } else if (
-                        auxiliar.getCartas().get(idCarta).getAccion() != null &&
-                        auxiliar.getCartas().get(idCarta).getAccion().equals("bloqueo")) {
-                    JsonObject bloqueo = new JsonObject();
-                    bloqueo.addProperty("Tipo", "Bloqueo");
-
-                    int temporal = (pocicionActual + direccion) % jugadores.size();
-                    enviarMensajePrivado(bloqueo.toString(), jugadores.get(temporal));
-                    this.pocicionActual = (this.pocicionActual + this.direccion) % jugadores.size();
-
-                }
-
-                mensaje = msj.toString();
-
-                this.enviarMensajeTodos(mensaje);
-
-                
-                this.mazo.agregarCarta(      this.auxiliar.getCartas().get(idCarta)      );
-                
-                cambioTurno();
-                
-                break;
-
-            case "UNO":
-
-                JsonObject uno = new JsonObject();
-                uno.addProperty("Tipo", "UNO");
-                uno.addProperty("Jugador", c.getName());
-                enviarMensajeTodos(uno.toString());
-
-                break;
-
-            case "YaGane":
-                
-                JsonObject ganador = new JsonObject();
-                ganador.addProperty("Tipo","Ganador");
-                ganador.addProperty("Ganador", c.getNombre());
-                
-                System.out.println("Hay ganador "+c.getName());
-                
-                enviarMensajeTodos(ganador.toString());
-                break;
-
-            default:
-                
-                System.out.println("Mensaje no reconocido");
-                break;
-
+        case "Robar": {
+            JsonObject msg = new JsonObject();
+            msg.addProperty("Tipo", "NuevaCarta");
+            msg.addProperty("Carta", mazo.robar());
+            c.enviarMensajeJugador(msg.toString());
+            break;
         }
 
+        case "Jugada": {
+
+            int idCarta = json.get("Carta").getAsInt();
+
+            JsonObject msj = new JsonObject();
+            msj.addProperty("Tipo", "CambioCarta");
+            msj.addProperty("Carta", idCarta);
+
+            String accion = auxiliar.getCartas().get(idCarta).getAccion();
+
+            // --- CAMBIO DE COLOR ---
+            if ("Cambio color".equals(accion)) {
+
+                JsonObject cambioColor = new JsonObject();
+                cambioColor.addProperty("Tipo", "CambioColor");
+                cambioColor.addProperty("NuevoColor", json.get("Color").getAsString());
+                enviarMensajeTodos(cambioColor.toString());
+
+            }
+            // --- REVERSA ---
+            else if ("reversa".equals(accion)) {
+
+                JsonObject cambioDireccion = new JsonObject();
+                cambioDireccion.addProperty("Tipo", "CambioDireccion");
+                enviarMensajeTodos(cambioDireccion.toString());
+
+                this.direccion *= -1;
+            }
+            // --- +4 ---
+            else if ("+4".equals(accion)) {
+
+                JsonObject sumar4 = new JsonObject();
+                sumar4.addProperty("Tipo", "Sumar4");
+
+                JsonArray idCartas = new JsonArray();
+                int temporal = moduloPositivo(pocicionActual + direccion, jugadores.size());
+
+                for (int i = 0; i < 4; i++) {
+                    idCartas.add(mazo.robar());
+                }
+
+                sumar4.add("Cartas", idCartas);
+                enviarMensajePrivado(sumar4.toString(), jugadores.get(temporal));
+                this.pocicionActual = (this.pocicionActual + this.direccion + this.jugadores.size()) % (this.jugadores.size()) ;
+                
+                
+            }
+            // --- +2 ---
+            else if ("+2".equals(accion)) {
+
+                JsonObject sumar2 = new JsonObject();
+                sumar2.addProperty("Tipo", "Sumar2");
+
+                JsonArray idCartas = new JsonArray();
+                int temporal = moduloPositivo(pocicionActual + direccion, jugadores.size());
+
+                for (int i = 0; i < 2; i++) {
+                    idCartas.add(mazo.robar());
+                }
+
+                sumar2.add("Cartas", idCartas);
+                enviarMensajePrivado(sumar2.toString(), jugadores.get(temporal));
+                this.pocicionActual = (this.pocicionActual + this.direccion + this.jugadores.size()) % (this.jugadores.size()) ;
+                
+            }
+            // --- BLOQUEO ---
+            else if ("bloqueo".equals(accion)) {
+
+                JsonObject bloqueo = new JsonObject();
+                bloqueo.addProperty("Tipo", "Bloqueo");
+
+                int temporal = moduloPositivo(pocicionActual + direccion, jugadores.size());
+                enviarMensajePrivado(bloqueo.toString(), jugadores.get(temporal));
+                this.pocicionActual = (this.pocicionActual + this.direccion + this.jugadores.size()) % (this.jugadores.size()) ;
+                
+            }
+
+            // Enviar que carta se puso
+            enviarMensajeTodos(msj.toString());
+
+            // Poner la carta en el mazo de descarte
+            this.mazo.agregarCarta(this.auxiliar.getCartas().get(idCarta));
+            Cartaactual = this.mazo.getCartas().getLast().getId_carta();
+
+            // Avanzar turno SOLO UNA VEZ
+            cambioTurno();
+
+            break;
+        }
+
+        case "UNO": {
+            JsonObject uno = new JsonObject();
+            uno.addProperty("Tipo", "UNO");
+            uno.addProperty("Jugador", c.getName());
+            enviarMensajeTodos(uno.toString());
+            break;
+        }
+
+        case "YaGane": {
+
+            JsonObject ganador = new JsonObject();
+            ganador.addProperty("Tipo", "Ganador");
+            ganador.addProperty("Ganador", c.getNombre());
+
+            System.out.println("Hay ganador " + c.getName());
+            enviarMensajeTodos(ganador.toString());
+            break;
+        }
+
+        default:
+            System.out.println("Mensaje no reconocido");
+            break;
+    }
+}
+
+    private int moduloPositivo(int valor, int modulo) {
+        int r = valor % modulo;
+        return (r < 0) ? r + modulo : r;
     }
 
     public void enviarMensajeTodos(String msg) {
