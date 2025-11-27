@@ -59,14 +59,6 @@ public class Carta {
         
         return json;
     
-    }
-    
-    
-    
-    
-    
-    
-    
-    
+    }    
     
 }

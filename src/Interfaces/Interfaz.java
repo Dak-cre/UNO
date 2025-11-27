@@ -1,5 +1,7 @@
 package Interfaces;
 
+import cartas.Carta;
+import cartas.CartaMazo;
 import com.google.gson.JsonObject;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -36,11 +38,9 @@ public class Interfaz extends javax.swing.JFrame {
         tuTurno = false;
         btnRobar.setEnabled(false);
         btnUno.setEnabled(false);
-      
-        
-                this.setResizable(false);
+
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
-        
 
     }
 
@@ -56,24 +56,23 @@ public class Interfaz extends javax.swing.JFrame {
     public void ListaCartasComboBox(List<cartas.Carta> mano) {
         //agrega cartas a la mano del jugador
         //listCartas.removeAllItems();
-        
+
         // linea 1
         DefaultComboBoxModel<cartas.Carta> modelo = new DefaultComboBoxModel<>();
         // linea 2
         //listCartas.setModel(modelo);
-        
+
         System.out.println("Sin cartas");
 
         for (cartas.Carta c : this.Jugador.getMano()) {
             modelo.addElement(c);
 
         }
-        
+
         System.out.println("Con cartas");
-        
+
         listCartas.setModel(modelo);
-        
-        
+
     }
 
     /**
@@ -101,7 +100,9 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         lblNotificacion = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        IDcarta = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        lblInfo = new javax.swing.JLabel();
+        IblColor = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
 
@@ -227,21 +228,47 @@ public class Interfaz extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(51, 204, 0));
         jPanel2.setForeground(new java.awt.Color(0, 0, 0));
 
+        jLabel5.setForeground(new java.awt.Color(255, 0, 51));
+        jLabel5.setText("Cartta");
+
+        lblInfo.setBackground(new java.awt.Color(255, 51, 51));
+        lblInfo.setForeground(new java.awt.Color(0, 0, 0));
+        lblInfo.setText("n               ");
+
+        IblColor.setBackground(new java.awt.Color(255, 0, 0));
+        IblColor.setForeground(new java.awt.Color(255, 0, 0));
+        IblColor.setText(" nmmn ");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(IDcarta, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(lblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)
+                        .addComponent(IblColor, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(127, 127, 127)
+                        .addComponent(jLabel5)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(IDcarta, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(405, 405, 405))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(69, 69, 69)
+                        .addComponent(lblInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(IblColor, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(43, 43, 43)
+                .addComponent(jLabel5)
+                .addGap(346, 346, 346))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -249,6 +276,7 @@ public class Interfaz extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -256,7 +284,10 @@ public class Interfaz extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -288,28 +319,36 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void listCartasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listCartasActionPerformed
         // seleccion de carta, de jugador
-       cartas.Carta seleccionada = (cartas.Carta) listCartas.getSelectedItem();
+        cartas.Carta seleccionada = (cartas.Carta) listCartas.getSelectedItem();
 
-    if (seleccionada != null) {
-        System.out.println("Carta seleccionada: " + seleccionada);
-    }
+        if (seleccionada != null) {
+            System.out.println("Carta seleccionada: " + seleccionada);
+        }
 
     }//GEN-LAST:event_listCartasActionPerformed
 
     private void btnUnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnoActionPerformed
 
+        /* 
+        
+        1. Buscar la carta que tiene como idCartActual
+        2. evaluar que la carta que eligio el jugador, tenga el color, el numero o 
+           sea un comodin, de lo contrario mandarle un mesnaje al usuario y no enviar la carta 
+        
+        
+         */
         JsonObject msj = new JsonObject();
         msj.addProperty("Tipo", "Jugada");
 
         cartas.Carta seleccionada = (cartas.Carta) listCartas.getSelectedItem();
 
         if (seleccionada == null) {
-            JOptionPane.showMessageDialog(null, "Selecciona una carta, hdtpm", 
-                    "Pendejo", 
+            JOptionPane.showMessageDialog(null, "Selecciona una carta, hdtpm",
+                    "Pendejo",
                     JOptionPane.ERROR_MESSAGE);
         }
-        
-        
+        Carta cartaActual = Jugador.getCartaMesa();
+
         System.out.println("Carta seleccionada: " + seleccionada);
         manoJugador.remove(seleccionada);/*Elimina carta de la mano del jugador*/
         listCartas.removeItem(seleccionada);/*Elimina la carta del comboBoc*/
@@ -317,7 +356,16 @@ public class Interfaz extends javax.swing.JFrame {
 
         String mensaje = msj.toString();
 
-        Jugador.enviarMensaje(mensaje);
+        boolean esValida = false;
+
+        // si no tiene nada dentro de accion, en la carta, 
+        if (seleccionada.getAccion() != null) {
+            if (seleccionada.getAccion().equals("comodin")
+                    || seleccionada.getAccion().equals("+4")) {
+                esValida = true;
+            }
+        }
+
 
     }//GEN-LAST:event_btnUnoActionPerformed
 
@@ -347,13 +395,14 @@ public class Interfaz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel IDcarta;
+    private javax.swing.JLabel IblColor;
     private javax.swing.JButton btnRobar;
     private javax.swing.JButton btnUno;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -361,6 +410,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JSlider jSlider1;
     private javax.swing.JSlider jSlider2;
     private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JLabel lblInfo;
     private javax.swing.JLabel lblNotificacion;
     private javax.swing.JLabel lblTurno;
     private javax.swing.JComboBox<cartas.Carta> listCartas;
@@ -407,18 +457,16 @@ public class Interfaz extends javax.swing.JFrame {
         //JOptionPane.showConfirmDialog(null, "Ya iniciow " + this.Jugador.getMano().size());
 
         //JOptionPane.showMessageDialog(null, "" + Jugador.getCartaActual());
-        
-        
         System.out.println("Dentro de iniciarJuego");
-        
-        ListaCartasComboBox( Jugador.getMano()  );
-        
+
+        ListaCartasComboBox(Jugador.getMano());
+
     }
 
     public void actualizarCartaMesa(cartas.Carta carta) {
 
         if (carta == null) {
-            IDcarta.setText("Carta en mesa: (ninguna)");
+            IblColor.setText("Carta en mesa: (ninguna)");
             return;
         }
 
@@ -432,7 +480,10 @@ public class Interfaz extends javax.swing.JFrame {
             texto = "Carta en mesa: " + carta.getColor() + " " + carta.getAccion();
         }
 
-        IDcarta.setText(texto);
+        IblColor.setText(texto);
+        jLabel5.setText("Color: " + carta.getColor());
+        lblInfo.setText("Valor: " + carta.getValor());
+
     }
 
     public void cambioTurno(String turno) {

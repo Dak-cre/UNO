@@ -59,7 +59,6 @@ public class Juego {
         }
 
         System.out.println("El juego ya ha iniciado");
-
         cambioTurno();
 
     }
@@ -72,7 +71,7 @@ public class Juego {
         msg.addProperty("CartaActual", this.Cartaactual);
 
         JsonArray array = new JsonArray();
-
+        System.out.println("Envio de cartas");
         for (int i = 0; i < 8; i++) {
 
             int id = mazo.robar();
@@ -82,6 +81,8 @@ public class Juego {
             array.add(id);
 
         }
+        
+        System.out.println("------");
 
         msg.add("Cartas", array);
 
@@ -134,10 +135,13 @@ public void procesarmensaje(JsonObject json, ClienteSocket c) {
             msj.addProperty("Tipo", "CambioCarta");
             msj.addProperty("Carta", idCarta);
 
-            String accion = auxiliar.getCartas().get(idCarta).getAccion();
+            String accion = auxiliar.obtenerCartaId(idCarta).getAccion();
 
             // --- CAMBIO DE COLOR ---
-            if ("Cambio color".equals(accion)) {
+            if (    
+                    accion != null || 
+                    "Cambio color".equals(accion) 
+                    ) {
 
                 JsonObject cambioColor = new JsonObject();
                 cambioColor.addProperty("Tipo", "CambioColor");
@@ -146,7 +150,11 @@ public void procesarmensaje(JsonObject json, ClienteSocket c) {
 
             }
             // --- REVERSA ---
-            else if ("reversa".equals(accion)) {
+            else if (
+                    
+                  accion != null || 
+                  "Cambio color".equals(accion) 
+                    ) {
 
                 JsonObject cambioDireccion = new JsonObject();
                 cambioDireccion.addProperty("Tipo", "CambioDireccion");

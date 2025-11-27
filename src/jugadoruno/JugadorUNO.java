@@ -33,9 +33,14 @@ public class JugadorUNO extends Thread{
     private BufferedReader mensajeServidor;
     List<cartas.Carta> mano = new ArrayList<>();// ATRIBUTO A AÑADIR: una mano de cartas con la que se va a jugar*/
     CartaMazo aux = new CartaMazo();
+    //Carta sobre la mesa
     Carta uax2 = new Carta("", "", -1);
     String color;
     Interfaz UI ;
+
+    public Carta getCartaMesa() {
+        return uax2;
+    }
     
     
     
@@ -183,13 +188,21 @@ public class JugadorUNO extends Thread{
                 int turno = json.get("Turno").getAsInt();
                 id_player = turno;
                 JsonArray id_cartas = json.get("Cartas").getAsJsonArray();
+                
+                // Aqui se guarda el id de la carta actual
+                // ahora buscarcala para obtener sus atributos para poder evaluar que la carta
+                // que eligio el jugador concuerde con la carta que eligio el jugador
                 this.cartaActual = json.get("CartaActual").getAsInt();
                 
                 for(int i = 0; i < id_cartas.size(); i++){
                     int j = id_cartas.get(i).getAsInt();
-                    this.mano.add(this.aux.getCartas().get(j));
+                    
+                    Carta temp = aux.obtenerCartaId(j);
+                    this.mano.add(temp);
+                    temp = null;
                     
                     System.out.println("Carta " + this.mano.getLast());
+                    System.out.println("ID: " + this.mano.getLast().getId_carta());
                     
                 }
                 
@@ -249,7 +262,7 @@ public class JugadorUNO extends Thread{
             
             case"Sumar2":
                 
-                 JsonArray cartas2 = json.get("Cartas").getAsJsonArray();
+                JsonArray cartas2 = json.get("Cartas").getAsJsonArray();
                 
                 
                 for(int i = 0; i < cartas2.size(); i++){

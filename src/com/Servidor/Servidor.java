@@ -128,13 +128,6 @@ public class Servidor extends Thread {
 
     public int getPUERTO() {
         return PUERTO;
-    }
-    
-    
-    
-    
-    
-    
-    
+    }    
 
 }
