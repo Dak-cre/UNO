@@ -38,7 +38,7 @@ public class ClienteSocket extends Thread {
             mensajesCliente  = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException e) {
             e.printStackTrace();
-        }  
+        }
          
     }
     

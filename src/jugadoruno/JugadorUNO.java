@@ -86,11 +86,15 @@ public class JugadorUNO extends Thread{
     
     @Override
     public void run(){
-        
+        System.out.println("HILO CLIENTE UNO INICIADO -> " + this.getName());
         String mensaje = "";
         try{
         
-            while(  ( mensaje = mensajeServidor.readLine()  ) != null ){
+            while(  socket != null && 
+                    !socket.isClosed() &&
+                    (mensaje = mensajeServidor.readLine()  ) != null 
+                    
+                    ){
                 
                 this.procesarMsj(mensaje);
             }
@@ -100,6 +104,9 @@ public class JugadorUNO extends Thread{
             
             System.out.println("Ocurrio un error");
         
+        }finally{
+        
+            cerrarConexion();
         }
         
     
@@ -196,7 +203,6 @@ public class JugadorUNO extends Thread{
                 
                 for(int i = 0; i < id_cartas.size(); i++){
                     int j = id_cartas.get(i).getAsInt();
-                    
                     Carta temp = aux.obtenerCartaId(j);
                     this.mano.add(temp);
                     temp = null;
@@ -219,7 +225,8 @@ public class JugadorUNO extends Thread{
             case "NuevaCarta": 
                 
                 int idActual = json.get("Carta").getAsInt();
-                this.mano.add(this.aux.getCartas().get(idActual));
+                Carta temporal = aux.obtenerCartaId(idActual);
+                this.mano.add(temporal);
                 this.UI.ListaCartasComboBox(mano);
              
             break; 
@@ -228,7 +235,7 @@ public class JugadorUNO extends Thread{
                 int idCartaMesa = json.get("Carta").getAsInt();
 
                 //obtener la carta jugada desde el mazo auxiliar
-                Carta cartaMesa = this.aux.getCartas().get(idCartaMesa);
+                Carta cartaMesa = aux.obtenerCartaId(idCartaMesa);
 
                 //actualizar la carta actual del juego
                 this.uax2 = cartaMesa;         
@@ -252,7 +259,7 @@ public class JugadorUNO extends Thread{
                 
                 for(int i = 0; i < cartas4.size(); i++){
                     int j = cartas4.get(i).getAsInt();
-                    this.mano.add(this.aux.getCartas().get(j));             
+                    this.mano.add(  this.aux.obtenerCartaId(j));             
                 }
                 
                 UI.notificacion("Te pusieron un +4 pipipipipi");
@@ -267,7 +274,7 @@ public class JugadorUNO extends Thread{
                 
                 for(int i = 0; i < cartas2.size(); i++){
                     int j = cartas2.get(i).getAsInt();
-                    this.mano.add(this.aux.getCartas().get(j));             
+                    this.mano.add( this.aux.obtenerCartaId(j) );             
                 }
                 
                 UI.notificacion("Te pusieron un +2 pipipipipi");

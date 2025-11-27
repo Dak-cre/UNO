@@ -67,6 +67,7 @@ public class Servidor extends Thread {
             while (!INICIARJUEGO) {
 
                 Socket temp = servidor.accept();
+                
 
                 this.JUGADORES.add(new ClienteSocket(temp, this));
                 JUGADORES.getLast().start();

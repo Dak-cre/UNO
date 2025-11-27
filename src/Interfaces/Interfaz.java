@@ -41,6 +41,7 @@ public class Interfaz extends javax.swing.JFrame {
 
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        System.out.println("Construyendo Interfaz de Juego...");
 
     }
 
@@ -99,6 +100,10 @@ public class Interfaz extends javax.swing.JFrame {
         lblTurno = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         lblNotificacion = new javax.swing.JLabel();
+        btnAzul = new javax.swing.JButton();
+        btnVerde = new javax.swing.JButton();
+        btnRojo = new javax.swing.JButton();
+        btnAmarillo = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         lblInfo = new javax.swing.JLabel();
@@ -192,6 +197,34 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGap(0, 38, Short.MAX_VALUE))
         );
 
+        btnAzul.setText("Azul");
+        btnAzul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAzulActionPerformed(evt);
+            }
+        });
+
+        btnVerde.setText("Verde");
+        btnVerde.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerdeActionPerformed(evt);
+            }
+        });
+
+        btnRojo.setText("Rojo");
+        btnRojo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRojoActionPerformed(evt);
+            }
+        });
+
+        btnAmarillo.setText("Amarillo");
+        btnAmarillo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAmarilloActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -205,9 +238,15 @@ public class Interfaz extends javax.swing.JFrame {
                         .addComponent(btnRobar)
                         .addGap(38, 38, 38)
                         .addComponent(btnUno))
+                    .addComponent(listCartas, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(listCartas, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnAzul)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnVerde)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRojo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAmarillo)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -216,9 +255,15 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
-                .addGap(37, 37, 37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(listCartas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(112, 112, 112)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAzul)
+                    .addComponent(btnVerde)
+                    .addComponent(btnRojo)
+                    .addComponent(btnAmarillo))
+                .addGap(102, 102, 102)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRobar)
                     .addComponent(btnUno))
@@ -346,6 +391,8 @@ public class Interfaz extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecciona una carta, hdtpm",
                     "Pendejo",
                     JOptionPane.ERROR_MESSAGE);
+            
+            return;
         }
         Carta cartaActual = Jugador.getCartaMesa();
 
@@ -355,6 +402,8 @@ public class Interfaz extends javax.swing.JFrame {
         msj.addProperty("Carta", seleccionada.getId_carta());
 
         String mensaje = msj.toString();
+        
+        Jugador.enviarMensaje(mensaje);
 
         boolean esValida = false;
 
@@ -368,6 +417,22 @@ public class Interfaz extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnUnoActionPerformed
+
+    private void btnAzulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAzulActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAzulActionPerformed
+
+    private void btnVerdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerdeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVerdeActionPerformed
+
+    private void btnRojoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRojoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRojoActionPerformed
+
+    private void btnAmarilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAmarilloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAmarilloActionPerformed
 
     /**
      * @param args the command line arguments
@@ -396,8 +461,12 @@ public class Interfaz extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IblColor;
+    private javax.swing.JButton btnAmarillo;
+    private javax.swing.JButton btnAzul;
     private javax.swing.JButton btnRobar;
+    private javax.swing.JButton btnRojo;
     private javax.swing.JButton btnUno;
+    private javax.swing.JButton btnVerde;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
