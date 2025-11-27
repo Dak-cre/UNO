@@ -35,6 +35,7 @@ public class Interfaz extends javax.swing.JFrame {
         //pedirHost(); 
         //pedirPuerto();
         //pedirNombre();
+        //chooseColor();
         tuTurno = false;
         btnRobar.setEnabled(false);
         btnUno.setEnabled(false);
@@ -50,6 +51,17 @@ public class Interfaz extends javax.swing.JFrame {
         ListaCartasComboBox(Jugador.getMano());
     }
 
+    public void chooseColor(){
+        String tempText = listCartas.getSelectedItem().toString();
+        
+        if(tuTurno==true && tempText.equals("+4")){
+            btnAmarillo.setEnabled(true);
+            btnAzul.setEnabled(true);
+            btnRojo.setEnabled(true);
+            btnVerde.setEnabled(true);
+        }
+    }
+    
     public void setManoJugador(List<cartas.Carta> mano) {
         this.manoJugador = mano;
     }
@@ -107,7 +119,7 @@ public class Interfaz extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         lblInfo = new javax.swing.JLabel();
-        IblColor = new javax.swing.JLabel();
+        lblColor = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
 
@@ -117,7 +129,7 @@ public class Interfaz extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("UNO MULTIJUGADOR");
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 153));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setForeground(new java.awt.Color(0, 0, 0));
 
         btnRobar.setBackground(new java.awt.Color(51, 51, 255));
@@ -149,7 +161,7 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
 
-        jPanel5.setBackground(new java.awt.Color(0, 204, 0));
+        jPanel5.setBackground(new java.awt.Color(102, 102, 102));
         jPanel5.setForeground(new java.awt.Color(255, 255, 102));
 
         jLabel1.setFont(new java.awt.Font("Wide Latin", 0, 12)); // NOI18N
@@ -267,10 +279,10 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRobar)
                     .addComponent(btnUno))
-                .addContainerGap(189, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(51, 204, 0));
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel5.setForeground(new java.awt.Color(255, 0, 51));
@@ -280,40 +292,42 @@ public class Interfaz extends javax.swing.JFrame {
         lblInfo.setForeground(new java.awt.Color(0, 0, 0));
         lblInfo.setText("n               ");
 
-        IblColor.setBackground(new java.awt.Color(255, 0, 0));
-        IblColor.setForeground(new java.awt.Color(255, 0, 0));
-        IblColor.setText(" nmmn ");
+        lblColor.setBackground(new java.awt.Color(255, 255, 255));
+        lblColor.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        lblColor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblColor.setText("Color");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblColor, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 10, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(lblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(64, 64, 64)
-                        .addComponent(IblColor, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(127, 127, 127)
-                        .addComponent(jLabel5)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addComponent(lblInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(29, 29, 29)
+                        .addComponent(lblInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(IblColor, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(43, 43, 43)
-                .addComponent(jLabel5)
-                .addGap(346, 346, 346))
+                        .addGap(40, 40, 40)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(lblColor, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(108, 108, 108))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -331,8 +345,7 @@ public class Interfaz extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -387,24 +400,21 @@ public class Interfaz extends javax.swing.JFrame {
 
         cartas.Carta seleccionada = (cartas.Carta) listCartas.getSelectedItem();
 
-        if (seleccionada == null) {
-            JOptionPane.showMessageDialog(null, "Selecciona una carta, hdtpm",
-                    "Pendejo",
-                    JOptionPane.ERROR_MESSAGE);
-            
-            return;
-        }
+
         Carta cartaActual = Jugador.getCartaMesa();
 
         System.out.println("Carta seleccionada: " + seleccionada);
-        manoJugador.remove(seleccionada);/*Elimina carta de la mano del jugador*/
+        this.Jugador.removerCarta(seleccionada);/*Elimina carta de la mano del jugador*/
+        
         listCartas.removeItem(seleccionada);/*Elimina la carta del comboBoc*/
         msj.addProperty("Carta", seleccionada.getId_carta());
 
         String mensaje = msj.toString();
         
         Jugador.enviarMensaje(mensaje);
-
+        
+        ListaCartasComboBox(this.Jugador.getMano());
+        
         boolean esValida = false;
 
         // si no tiene nada dentro de accion, en la carta, 
@@ -420,18 +430,33 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void btnAzulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAzulActionPerformed
         // TODO add your handling code here:
+        String colorATemp="Azul";
+        lblColor.setOpaque(true);
+        lblColor.setBackground(Color.BLUE);
+        lblColor.setText("Azul: ");
+        
     }//GEN-LAST:event_btnAzulActionPerformed
 
     private void btnVerdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerdeActionPerformed
         // TODO add your handling code here:
+        String colorVTemp="Verde";
+        lblColor.setOpaque(true);
+        lblColor.setBackground(Color.GREEN);
+        lblColor.setText("Verde: ");
     }//GEN-LAST:event_btnVerdeActionPerformed
 
     private void btnRojoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRojoActionPerformed
         // TODO add your handling code here:
+        String colorRTemp="Rojo";
+        lblColor.setBackground(Color.RED);
+        lblColor.setText("Rojo: ");
     }//GEN-LAST:event_btnRojoActionPerformed
 
     private void btnAmarilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAmarilloActionPerformed
         // TODO add your handling code here:
+        String colorAmTemp="Amarillo";
+        lblColor.setBackground(Color.YELLOW);
+        lblColor.setText("Amarillo: ");
     }//GEN-LAST:event_btnAmarilloActionPerformed
 
     /**
@@ -454,13 +479,12 @@ public class Interfaz extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new Interfaz().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel IblColor;
     private javax.swing.JButton btnAmarillo;
     private javax.swing.JButton btnAzul;
     private javax.swing.JButton btnRobar;
@@ -479,6 +503,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JSlider jSlider1;
     private javax.swing.JSlider jSlider2;
     private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JLabel lblColor;
     private javax.swing.JLabel lblInfo;
     private javax.swing.JLabel lblNotificacion;
     private javax.swing.JLabel lblTurno;
@@ -535,7 +560,7 @@ public class Interfaz extends javax.swing.JFrame {
     public void actualizarCartaMesa(cartas.Carta carta) {
 
         if (carta == null) {
-            IblColor.setText("Carta en mesa: (ninguna)");
+            lblColor.setText("Carta en mesa: (ninguna)");
             return;
         }
 
@@ -543,16 +568,34 @@ public class Interfaz extends javax.swing.JFrame {
 
         //si es una carta de numero
         if (carta.getAccion() == null) {
-            texto = "Carta en mesa: " + carta.getColor() + " " + carta.getValor();
+            texto = "" + carta.getValor();
         } //Ssi es una carta de acción
         else {
-            texto = "Carta en mesa: " + carta.getColor() + " " + carta.getAccion();
+            texto = "" + carta.getAccion();
         }
 
-        IblColor.setText(texto);
+        lblColor.setText(texto);
         jLabel5.setText("Color: " + carta.getColor());
         lblInfo.setText("Valor: " + carta.getValor());
-
+        
+        switch(carta.getColor()){
+            case "verde":
+                lblColor.setOpaque(true);
+                lblColor.setBackground(Color.GREEN);
+            break;
+            case "Azul":
+                lblColor.setOpaque(true);
+                lblColor.setBackground(Color.BLUE);
+            break;
+            case "Rojo":
+                lblColor.setOpaque(true);
+                lblColor.setBackground(Color.RED);
+            break;
+            case "Amarrillo":
+                lblColor.setOpaque(true);
+                lblColor.setBackground(Color.YELLOW);
+            break;
+        }
     }
 
     public void cambioTurno(String turno) {
