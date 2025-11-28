@@ -494,16 +494,26 @@ public class Interfaz extends javax.swing.JFrame {
 
     public boolean validarCarta(Carta cartaActual, Carta seleccionada) {
 
-        if (cartaActual.getColor() == seleccionada.getColor() || cartaActual.getValor() == seleccionada.getValor()) {
-            
+        if ( ( cartaActual.getColor() == seleccionada.getColor()
+                || cartaActual.getValor() == seleccionada.getValor())
+                 )  {
+
             System.out.println("Cartas parametro : " + cartaActual + seleccionada);
-            
+
             return true;
-        } else if ( 
-                cartaActual.getAccion() == seleccionada.getAccion() 
-                & ( cartaActual.getAccion() != null && seleccionada.getAccion() != null   )  ){
-            
-            
+        } else if (
+                
+                cartaActual.getAccion() != null
+                &&
+                seleccionada.getAccion() != null
+                &&
+                
+                cartaActual.getAccion() == seleccionada.getAccion()
+                
+                
+                
+                ) {
+
             return true;
         }
         JOptionPane.showMessageDialog(null, "carta no valida, selecciona otra");
@@ -516,7 +526,7 @@ public class Interfaz extends javax.swing.JFrame {
             return false;
         }
         
-        */
+         */
     }
 
     public void enviarCarta(Carta seleccionada) {
