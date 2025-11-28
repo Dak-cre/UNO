@@ -3,6 +3,7 @@ package jugadoruno;
 /* Importación de clases necesarias para sockets, JSON, manejo de entrada y salida y la estructura de datos.*/
 import Interfaces.Interfaz;
 import cartas.Carta;
+import cartas.CartaComodin;
 import cartas.CartaMazo;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -212,6 +213,8 @@ public class JugadorUNO extends Thread {
                 }
 
                 //UI.ListaCartasComboBox(mano);
+                uax2 = aux.obtenerCartaId(  cartaActual );
+                UI.actualizarCartaMesa(  aux.obtenerCartaId(  cartaActual )  );         
                 UI.iniciarJuego();
 
                 break;
@@ -232,18 +235,38 @@ public class JugadorUNO extends Thread {
                 int idCartaMesa = json.get("Carta").getAsInt();
 
                 //obtener la carta jugada desde el mazo auxiliar
-                Carta cartaMesa = aux.obtenerCartaId(idCartaMesa);
+                Carta cartaMesa = aux.obtenerCartaId( idCartaMesa );
 
                 //actualizar la carta actual del juego
                 this.uax2 = cartaMesa;
                 this.cartaActual = idCartaMesa;
 
                 //aualizar la interfaz del jugador
-                UI.actualizarCartaMesa(cartaMesa);
+                UI.actualizarCartaMesa( cartaMesa );
+                
+                System.out.println("Carta actual: " + uax2);
+                
                 break;
 
             case "CambioColor":// Se actualiza el color elegido por un jugador
-                color = json.get("Color").getAsString();
+                // Aqui reciben el color en caso de  un cambio de color por parte de otro jugador
+                // actualziar la carta de ser necesario apra valirdar solo el color
+                
+                if( json.has("Color") ){
+                    color = json.get("Color").getAsString();
+                    System.out.println("Color nuevo " + color);
+                }else{
+                    
+                    System.out.println("No me lelgo un color");
+                }
+                
+                Carta temp = new CartaComodin(color,"",-1);
+                this.uax2 = temp  ;
+                UI.actualizarCartaMesa( temp );
+                
+                System.out.println("Carta actual cambio color: " + uax2);
+                
+                
                 break;
 
             case "CambioDireccion":// Se notifica del cambio de dirección del turno
@@ -322,7 +345,6 @@ public class JugadorUNO extends Thread {
     public void removerCarta(Carta c){
             
         this.mano.remove(c);
-        
     }
     
 }

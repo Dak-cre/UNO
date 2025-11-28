@@ -119,11 +119,11 @@ public class Juego {
 
             case "Robar": {
                 JsonObject msg = new JsonObject();
-                
+
                 msg.addProperty("Tipo", "NuevaCarta");
                 msg.addProperty("Carta", mazo.robar());
                 c.enviarMensajeJugador(msg.toString());
-                
+
                 break;
             }
 
@@ -144,8 +144,18 @@ public class Juego {
 
                         JsonObject cambioColor = new JsonObject();
                         cambioColor.addProperty("Tipo", "CambioColor");
-                       // cambioColor.addProperty("NuevoColor", json.get("Color").getAsString());
+                        cambioColor.addProperty("Color", json.get("Color").getAsString());
                         enviarMensajeTodos(cambioColor.toString());
+
+                        // Enviar que carta se puso
+                       // enviarMensajeTodos(msj.toString());
+
+                        // Poner la carta en el mazo de descarte
+                        this.mazo.agregarCarta(this.auxiliar.getCartas().get(idCarta));
+                        Cartaactual = this.mazo.getCartas().getLast().getId_carta();
+
+                        // Avanzar turno SOLO UNA VEZ
+                        cambioTurno();
 
                     } // --- REVERSA ---
                     else if ("reversa".equals(accion)) {
@@ -155,6 +165,17 @@ public class Juego {
                         enviarMensajeTodos(cambioDireccion.toString());
 
                         this.direccion *= -1;
+
+                        // Enviar que carta se puso
+                        enviarMensajeTodos(msj.toString());
+
+                        // Poner la carta en el mazo de descarte
+                        this.mazo.agregarCarta(this.auxiliar.getCartas().get(idCarta));
+                        Cartaactual = this.mazo.getCartas().getLast().getId_carta();
+
+                        // Avanzar turno SOLO UNA VEZ
+                        cambioTurno();
+
                     } // --- +4 ---
                     else if ("+4".equals(accion)) {
 
@@ -168,9 +189,23 @@ public class Juego {
                             idCartas.add(mazo.robar());
                         }
 
+                        JsonObject cambioColor = new JsonObject();
+                        cambioColor.addProperty("Tipo", "CambioColor");
+                        cambioColor.addProperty("Color", json.get("Color").getAsString());
+                        enviarMensajeTodos(cambioColor.toString());
+
                         sumar4.add("Cartas", idCartas);
                         enviarMensajePrivado(sumar4.toString(), jugadores.get(temporal));
                         this.pocicionActual = (this.pocicionActual + this.direccion + this.jugadores.size()) % (this.jugadores.size());
+
+                        // Enviar que carta se puso
+                        //enviarMensajeTodos(msj.toString());
+                        // Poner la carta en el mazo de descarte
+                        this.mazo.agregarCarta(this.auxiliar.getCartas().get(idCarta));
+                        Cartaactual = this.mazo.getCartas().getLast().getId_carta();
+
+                        // Avanzar turno SOLO UNA VEZ
+                        cambioTurno();
 
                     } // --- +2 ---
                     else if ("+2".equals(accion)) {
@@ -189,6 +224,16 @@ public class Juego {
                         enviarMensajePrivado(sumar2.toString(), jugadores.get(temporal));
                         this.pocicionActual = (this.pocicionActual + this.direccion + this.jugadores.size()) % (this.jugadores.size());
 
+                        // Enviar que carta se puso
+                        enviarMensajeTodos(msj.toString());
+
+                        // Poner la carta en el mazo de descarte
+                        this.mazo.agregarCarta(this.auxiliar.getCartas().get(idCarta));
+                        Cartaactual = this.mazo.getCartas().getLast().getId_carta();
+
+                        // Avanzar turno SOLO UNA VEZ
+                        cambioTurno();
+
                     } // --- BLOQUEO ---
                     else if ("bloqueo".equals(accion)) {
 
@@ -199,19 +244,31 @@ public class Juego {
                         enviarMensajePrivado(bloqueo.toString(), jugadores.get(temporal));
                         this.pocicionActual = (this.pocicionActual + this.direccion + this.jugadores.size()) % (this.jugadores.size());
 
+                        // Enviar que carta se puso
+                        enviarMensajeTodos(msj.toString());
+
+                        // Poner la carta en el mazo de descarte
+                        this.mazo.agregarCarta(this.auxiliar.getCartas().get(idCarta));
+                        Cartaactual = this.mazo.getCartas().getLast().getId_carta();
+
+                        // Avanzar turno SOLO UNA VEZ
+                        cambioTurno();
+
                     }
 
+                } else {
+
+                    // Enviar que carta se puso
+                    enviarMensajeTodos(msj.toString());
+
+                    // Poner la carta en el mazo de descarte
+                    this.mazo.agregarCarta(this.auxiliar.getCartas().get(idCarta));
+                    Cartaactual = this.mazo.getCartas().getLast().getId_carta();
+
+                    // Avanzar turno SOLO UNA VEZ
+                    cambioTurno();
+
                 }
-
-                // Enviar que carta se puso
-                enviarMensajeTodos(msj.toString());
-
-                // Poner la carta en el mazo de descarte
-                this.mazo.agregarCarta(this.auxiliar.getCartas().get(idCarta));
-                Cartaactual = this.mazo.getCartas().getLast().getId_carta();
-
-                // Avanzar turno SOLO UNA VEZ
-                cambioTurno();
 
                 break;
             }
@@ -234,7 +291,30 @@ public class Juego {
                 enviarMensajeTodos(ganador.toString());
                 break;
             }
+            /*
+            case "CambioColor":
+                
+                JsonObject cambioCOlor = new JsonObject();
+                cambioCOlor.addProperty("Tipo", "CambioColor");
+                String color = json.get("Color").getAsString();
+                
+                if(color != null ){
+                                                    
+                cambioCOlor.addProperty("Color",  color  );
+                enviarMensajeTodos( cambioCOlor.toString()  );
+                
+                    System.out.println(""+color);
+                
+                }else{
+                    
+                    System.out.println("No hay color");
+                }
+                
+                
 
+                
+                break;
+             */
             default:
                 System.out.println("Mensaje no reconocido");
                 break;
