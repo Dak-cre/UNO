@@ -277,17 +277,17 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(listCartas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAzul)
                     .addComponent(btnVerde)
                     .addComponent(btnRojo)
                     .addComponent(btnAmarillo))
-                .addGap(102, 102, 102)
+                .addGap(74, 74, 74)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRobar)
                     .addComponent(btnUno))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
@@ -488,45 +488,67 @@ public class Interfaz extends javax.swing.JFrame {
         cambioCOlor.addProperty("Carta", seleccionada.getId_carta());
         cambioCOlor.addProperty("Color", Color);
         Jugador.enviarMensaje(cambioCOlor.toString());
-        listCartas.removeItem(seleccionada);
-        ListaCartasComboBox(this.Jugador.getMano());
+        
+        this.Jugador.removerCarta(  seleccionada );
+        
+        btnUno.setEnabled(false);
+        btnRobar.setEnabled(false);
+        
+        ListaCartasComboBox( this.Jugador.getMano());
     }
 
     public boolean validarCarta(Carta cartaActual, Carta seleccionada) {
 
-        if ( ( cartaActual.getColor() == seleccionada.getColor()
-                || cartaActual.getValor() == seleccionada.getValor())
-                 )  {
-
-            System.out.println("Cartas parametro : " + cartaActual + seleccionada);
-
-            return true;
-        } else if (
-                
-                cartaActual.getAccion() != null
-                &&
-                seleccionada.getAccion() != null
-                &&
-                
-                cartaActual.getAccion() == seleccionada.getAccion()
-                
-                
-                
-                ) {
-
-            return true;
-        }
-        JOptionPane.showMessageDialog(null, "carta no valida, selecciona otra");
-        return false;
-        /*
-        if(cartaActual.getColor()== seleccionada.getColor()|| cartaActual.getAccion()==seleccionada.getAccion()){
-            return true;
-        }else{
-            JOptionPane.showMessageDialog(null, "carta no valida, selecciona otra");
+        if (cartaActual == null || seleccionada == null) {
             return false;
         }
-        
-         */
+
+        // Normalizar
+        String colorActual = cartaActual.getColor() == null ? "" : cartaActual.getColor().trim();
+        String colorSeleccion = seleccionada.getColor() == null ? "" : seleccionada.getColor().trim();
+
+        String accionActual = cartaActual.getAccion() == null ? "" : cartaActual.getAccion().trim();
+        String accionSeleccion = seleccionada.getAccion() == null ? "" : seleccionada.getAccion().trim();
+
+        int valorActual = cartaActual.getValor();
+        int valorSeleccion = seleccionada.getValor();
+
+        // 1) Comodines siempre válidos (por tu regla: +4 y "Cambio color")
+        if (accionSeleccion.equalsIgnoreCase("+4")
+                || accionSeleccion.equalsIgnoreCase("Cambio color")) {
+            return true;
+        }
+
+        // 2) Si la carta seleccionada es una carta de ACCIÓN (ej: +2, reversa, bloqueo)
+        if (!accionSeleccion.isEmpty()) {
+            // 2.a) Si la acción coincide (p. ej. +2 sobre +2) -> válido
+            if (!accionActual.isEmpty() && accionActual.equalsIgnoreCase(accionSeleccion)) {
+                return true;
+            }
+            // 2.b) Si el color coincide -> válido (p. ej. +2 rojo sobre 7 rojo)
+            if (!colorSeleccion.isEmpty() && !colorActual.isEmpty() && colorSeleccion.equalsIgnoreCase(colorActual)) {
+                return true;
+            }
+            // Si es acción y no cumple ni acción ni color -> inválida
+            JOptionPane.showMessageDialog(null, "Carta no valida");
+            return false;
+        }
+
+        // 3) Si llegamos aquí, la carta seleccionada NO es acción (es numérica)
+        // 3.a) Coincidencia de color -> válido
+        if (!colorSeleccion.isEmpty() && !colorActual.isEmpty() && colorSeleccion.equalsIgnoreCase(colorActual)) {
+            return true;
+        }
+        // 3.b) Coincidencia de valor sólo si la carta de la mesa también es numérica
+        if (accionActual.isEmpty() && valorActual == valorSeleccion) {
+            return true;
+        }
+
+        JOptionPane.showMessageDialog(null, "Carta no valida");
+
+        // 4) No cumple ninguna regla
+        return false;
+
     }
 
     public void enviarCarta(Carta seleccionada) {
@@ -538,7 +560,34 @@ public class Interfaz extends javax.swing.JFrame {
         listCartas.removeItem(seleccionada);/*Elimina la carta del comboBoc*/
         msj.addProperty("Carta", seleccionada.getId_carta());
         String mensaje = msj.toString();
+
+        if (this.Jugador.getMano().size() == 1) {
+
+            JsonObject uno = new JsonObject();
+            uno.addProperty("Tipo", "UNO");
+
+            this.Jugador.enviarMensaje(uno.toString());
+
+            notificacion("Estas a una carta de ganar");
+
+        } else if (this.Jugador.getMano().size() == 0) {
+
+            JsonObject yagane = new JsonObject();
+            yagane.addProperty("Tipo", "YaGane");
+
+            this.Jugador.enviarMensaje(yagane.toString());
+
+            JOptionPane.showMessageDialog(null, "Felicidades Ganaste");
+            
+            btnUno.setEnabled(false);
+            btnRobar.setEnabled(false);
+            return;
+
+        }
+
         Jugador.enviarMensaje(mensaje);
+        this.Jugador.removerCarta(seleccionada);
+
         ListaCartasComboBox(this.Jugador.getMano());
 
     }
@@ -588,6 +637,8 @@ public class Interfaz extends javax.swing.JFrame {
         cartas.Carta seleccionada = (cartas.Carta) listCartas.getSelectedItem();
         // enviarCarta(seleccionada);
         cambioColor("Amarrillo");
+        
+        
 
     }//GEN-LAST:event_btnAmarilloActionPerformed
 
@@ -735,7 +786,6 @@ public class Interfaz extends javax.swing.JFrame {
     public void cambioTurno(String turno) {
         btnRobar.setEnabled(false);
         btnUno.setEnabled(false);
-
         lblTurno.setText("Turno de " + turno);
     }
 

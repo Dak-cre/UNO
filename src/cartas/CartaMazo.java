@@ -19,12 +19,13 @@ import java.util.List;
 public class CartaMazo {
 
     int id = 0;
-    
+
     //CartaMazo mazoOriginal = new cartas.CartaMazo();
-    
     private ArrayList<Carta> cartas = new ArrayList();
     //
-   private ArrayList<Carta> Auxiliar = new ArrayList<>();
+    private ArrayList<Carta> Auxiliar = new ArrayList<>();
+
+    private ArrayList<Carta> descarte = new ArrayList<>();
 
     String colores[] = {"Rojo", "Azul", "verde", "Amarrillo"};
     String accion[] = {"+2", "reversa", "bloqueo"};
@@ -71,10 +72,10 @@ public class CartaMazo {
         id++;
         cartas.add(new CartaComodin("", "Cambio color", id));
         id++;
-        
+
         //
         Auxiliar = cartas;
-        
+
         Collections.shuffle(cartas);
     }
 
@@ -87,24 +88,34 @@ public class CartaMazo {
 
     public int robar() {
 
-        int id = cartas.getLast().getId_carta() ;
-        
-        System.out.println(cartas.getLast().getId_carta());
-        
-        
-        cartas.removeLast();
-        
+        int id = 0;
 
+        if (cartas.size() > 0) {
+
+            id = cartas.getLast().getId_carta();
+
+            System.out.println(cartas.getLast().getId_carta());
+
+            cartas.removeLast();
+
+        }else{
+            
+            cartas.addAll( descarte );
+            descarte.clear();
+            
+            id = cartas.getLast().getId_carta();
+            cartas.removeLast();
+            
+        }
+        
+        
         return id;
     }
 
     public ArrayList<Carta> getCartas() {
         return cartas;
     }
-    
-    
-    
-    
+
     public void generarMazo(ClienteSocket c) {
 
         List<Carta> manoJugador = new ArrayList();
@@ -116,7 +127,7 @@ public class CartaMazo {
 
         for (int i = 0; i < 8; i++) {
 
-            arreglo.add( this.robar());
+            arreglo.add(this.robar());
 
         }
 
@@ -144,28 +155,22 @@ public class CartaMazo {
 
     public void agregarCarta(Carta c) {
 
-        cartas.addFirst(c);
-        Collections.shuffle(cartas);
+        this.descarte.add(c);
 
+        //Collections.shuffle(cartas);
     }
-    
+
     // esta funcion
-    public Carta obtenerCartaId(int id){
-        
-        for(Carta c: Auxiliar) {
-            
-            if(  c.id_carta == id ) {
+    public Carta obtenerCartaId(int id) {
+
+        for (Carta c : Auxiliar) {
+
+            if (c.id_carta == id) {
                 return c;
             }
         }
-        
+
         return null;
     }
 
 }
-
-
-
-
-
-

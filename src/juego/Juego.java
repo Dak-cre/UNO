@@ -276,8 +276,8 @@ public class Juego {
             case "UNO": {
                 JsonObject uno = new JsonObject();
                 uno.addProperty("Tipo", "UNO");
-                uno.addProperty("Jugador", c.getName());
-                enviarMensajeTodos(uno.toString());
+                uno.addProperty("Jugador", c.getNombre());
+                enviarMensajeMenos(uno.toString(),c);
                 break;
             }
 
@@ -288,7 +288,10 @@ public class Juego {
                 ganador.addProperty("Ganador", c.getNombre());
 
                 System.out.println("Hay ganador " + c.getName());
-                enviarMensajeTodos(ganador.toString());
+                enviarMensajeMenos(ganador.toString(),c);
+                
+                this.hayganador = true;
+                
                 break;
             }
             /*

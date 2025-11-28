@@ -130,5 +130,12 @@ public class Servidor extends Thread {
     public int getPUERTO() {
         return PUERTO;
     }    
-
+    
+    
+    public int numJugadores(){
+        
+        return this.JUGADORES.size();
+    
+    }
+    
 }

@@ -7,6 +7,7 @@ package Interfaces;
 import com.Servidor.Servidor;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -124,6 +125,15 @@ public class TestArea extends javax.swing.JFrame {
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
         // TODO add your handling code here:
+        
+        
+        if(servidor.numJugadores() <  3){
+            
+            JOptionPane.showMessageDialog(null, "Debe tener un minimo de 3 jugadores",
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            
+            return;
+        }
         
         servidor.IniciarJuego();
         
